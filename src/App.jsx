@@ -122,6 +122,14 @@ const packages = [
   },
 ];
 
+const navigationItems = [
+  ["Главная", "#top"],
+  ["Услуги", "#services"],
+  ["Пакеты", "#packages"],
+  ["Прайс", "#price"],
+  ["Контакты", "#contacts"],
+];
+
 function Header() {
   const [open, setOpen] = useState(false);
 
@@ -143,19 +151,15 @@ function Header() {
         </span>
       </a>
 
-      <nav className={open ? "nav open" : "nav"}>
-        <a href="#services" onClick={closeMenu}>Услуги</a>
-        <a href="#price" onClick={closeMenu}>Прайс</a>
-        <a href="#about" onClick={closeMenu}>О компании</a>
-        <a href="#contacts" onClick={closeMenu}>Контакты</a>
+      <nav className={open ? "nav open" : "nav"} aria-label="Основное меню">
+        {navigationItems.map(([label, href]) => (
+          <a href={href} onClick={closeMenu} key={href}>
+            {label}
+          </a>
+        ))}
       </nav>
 
       <div className="headerActions">
-        <div className="headerPhone">
-          <span>Звонок мастеру</span>
-          <a href={companyContacts.phoneHref}>{companyContacts.phone}</a>
-        </div>
-
         <a className="callMasterBtn" href={companyContacts.phoneHref}>
           <Phone size={18} />
           Вызвать мастера
@@ -164,6 +168,7 @@ function Header() {
         <button
           className="menuBtn"
           onClick={() => setOpen(!open)}
+          aria-expanded={open}
           aria-label="Меню"
         >
           {open ? <X /> : <Menu />}
@@ -214,12 +219,12 @@ function App() {
             <div className="heroActions">
               <a className="primary" href={companyContacts.phoneHref}>
                 <Phone size={18} />
-                Позвонить мастеру
+                Вызвать мастера
               </a>
 
               <a className="secondary" href="#price">
                 <FileText size={18} />
-                Смотреть прайс
+                Посмотреть прайс
               </a>
             </div>
 
@@ -262,9 +267,27 @@ function App() {
           </div>
         </section>
 
-        <section className="section" id="services">
+        <section className="section servicesOverview" id="services">
           <div className="sectionTitle">
             <span>Услуги</span>
+            <h2>Комплексное обслуживание инженерии дома</h2>
+            <p>
+              Приезжаем на диагностику, ремонт, профилактику и сезонную настройку систем,
+              чтобы в доме стабильно работали газ, отопление, вода и климат.
+            </p>
+          </div>
+
+          <div className="serviceGrid">
+            <div><Flame /> Газовые котлы и колонки</div>
+            <div><ShieldCheck /> Проверка безопасности газа</div>
+            <div><Droplets /> Отопление и водоснабжение</div>
+            <div><Fan /> Кондиционеры и вентиляция</div>
+          </div>
+        </section>
+
+        <section className="section" id="packages">
+          <div className="sectionTitle">
+            <span>Пакеты</span>
             <h2>Пакеты обслуживания</h2>
             <p>
               Четыре понятных направления для клиента: тепло, газ, климат и инженерные системы.
